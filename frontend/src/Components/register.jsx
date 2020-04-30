@@ -5,7 +5,7 @@ import User from './../models/user';
 import { NoverdoseRepo } from './../Api/NoverdoseRepo';
 import { RegisterButton } from './loginButton';
 import { Redirect } from 'react-router-dom';
-import {LoginButton, RegisterErrorMessage} from './loginButton';
+import {LoginButton, RegisterErrorMessage, RegisterErrorMessage2} from './loginButton';
 
 
 export class RegisterPage extends React.Component {
@@ -22,7 +22,8 @@ export class RegisterPage extends React.Component {
         birthday: '',
         medications: '',
         profilePicUrl: '',
-        registered: null,
+        registered: undefined,
+        register2: undefined,
         confirm: null
     };
 
@@ -30,12 +31,23 @@ export class RegisterPage extends React.Component {
         if(password === confirmPassword)
         {
             this.setState({confirm: true});
-            this.noverdoseRepo.addUser(name, email, password)
-        .then(accountId => {new User(accountId, name, email, password, this.state.birthday, this.state.medications, this.state.profilePicUrl)
-            console.log(accountId);
-            this.setState({id: accountId.id}); 
-            this.setState({registered: true});
-        });
+            this.noverdoseRepo.searchUser(email)
+            .then(resp => {
+                if(resp.data.length == 0)
+                {
+                    this.noverdoseRepo.addUser(name, email, password)
+                    .then(accountId => {new User(accountId, name, email, password, this.state.birthday, this.state.medications, this.state.profilePicUrl)
+                        console.log(accountId);
+                        this.setState({id: accountId.id}); 
+                        this.setState({registered: true});
+                    });
+                }
+                else
+                {
+                this.setState({register2: false});
+
+                }
+            });
         }
         else
         {
@@ -51,6 +63,7 @@ export class RegisterPage extends React.Component {
                 <img src={logo} alt="Avatar" class="avatar"></img>
             </div>
             {this.state.registered == false && <RegisterErrorMessage/>}
+            {this.state.register2 == false && <RegisterErrorMessage2/>}
             <div className="login-form">
             <div className="form-group">
                     <label htmlFor="search_name">Name</label>

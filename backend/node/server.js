@@ -310,6 +310,21 @@ app.get("/getPharmacies", function (req, res) {
     }
   })
 });
+app.get("/searchUser", function (req, res) {
+  let query = "Select * from users where email = " + req.query.email;
+  connection.query(query, (err, rows, feild) => {
+    if(err) {
+      console.log(err);
+      logger.error("failed getting a user");
+      res.status(400);
+    }
+    else{
+      res.status(200).json({
+        "data": rows
+      })
+    }
+  })
+});
 app.get("/getSideEffects", function (req, res) {
   let query = "Select * from sideEffects";
   connection.query(query, (err, rows, feild) => {

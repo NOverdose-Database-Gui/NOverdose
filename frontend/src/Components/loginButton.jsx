@@ -29,6 +29,15 @@ export const RegisterErrorMessage = props => {
                             
 }
 
+export const RegisterErrorMessage2 = props => {
+    
+    console.log('here');
+    return<div>
+        <h3 className = "error">Email already used, please register a different account!</h3>
+    </div>
+                            
+}
+
 export const RegisterButton = props => {
     
     return<div>

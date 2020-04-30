@@ -127,6 +127,20 @@ export class NoverdoseRepo {
         });
     }
 
+    searchUser(email)
+    {
+        email = '"' + email + '"';
+        return new Promise((resolve, reject) => {
+            axios.get(`${this.url}/searchUser`, {params:{email:email}})
+            .then(response=>{
+                console.log(response);
+                resolve(response.data);
+            }
+        )
+            .catch(resp => alert(resp));
+        });
+    }
+
     addPrescription(drugId,userId) {
         var checkIfInDb = 0;
         var returnValue = 0;
