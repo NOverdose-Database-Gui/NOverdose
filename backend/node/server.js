@@ -242,8 +242,6 @@ app.listen(config.port, config.host, (e) => {
 //API ROUTES
 app.get("/login", function (req, res) {
   var returnId;
-    let email = req.query.email;
-    let password = req.query.password;
     let query = "select * from users where email = '" + email + "' and password = '" + password + "' limit 1;";
     connection.query(query, function(err, rows, field) {
       console.log("req", req.query);
