@@ -40,6 +40,190 @@ connection.connect(function (err) {
   logger.info("Connected to the DB!");
 });
 
+//Initialize
+app.post("/initDB", function (req, res) {
+
+  //Dropping tables
+
+  let query = "DROP TABLE IF EXISTS prescriptions;";
+  connection.query(query, (err, result) =>
+  {
+    if(err) {
+      console.log(err);
+    }
+    else{
+      }
+  });
+
+  query = "DROP TABLE IF EXISTS drugs"
+  connection.query(query, (err, result) =>
+  {
+    if(err) {
+      console.log(err);
+    }
+    else{
+      }
+  });
+
+  query = "DROP TABLE IF EXISTS users"
+  connection.query(query, (err, result) =>
+  {
+    if(err) {
+      console.log(err);
+    }
+    else{
+      }
+  });
+
+  query = "DROP TABLE IF EXISTS sideEffects"
+  connection.query(query, (err, result) =>
+  {
+    if(err) {
+      console.log(err);
+    }
+    else{
+      }
+  });
+
+  query = "DROP TABLE IF EXISTS symptoms"
+  connection.query(query, (err, result) =>
+  {
+    if(err) {
+      console.log(err);
+    }
+    else{
+      }
+  });
+
+  query = "DROP TABLE IF EXISTS diseases;"
+  connection.query(query, (err, result) =>
+  {
+    if(err) {
+      console.log(err);
+    }
+    else{
+      }
+  });
+
+  query = "DROP TABLE IF EXISTS pharmacies;"
+  connection.query(query, (err, result) =>
+  {
+    if(err) {
+      console.log(err);
+    }
+    else{
+      }
+  });
+
+
+
+  //Diseases
+	query = "CREATE TABLE diseases (diseaseId int NOT NULL AUTO_INCREMENT,name varchar(45) DEFAULT NULL,PRIMARY KEY (diseaseId))";
+  connection.query(query, function(err, result) {
+		if (err) {
+			console.log(err);
+		}
+	});
+
+  query = "ALTER TABLE diseases AUTO_INCREMENT = 6000;"
+  connection.query(query, function(err, result) {
+    if (err) {
+      console.log(err);
+    }
+  });
+
+  //SideEffects
+
+	query = "CREATE TABLE sideEffects (sideEffectId int NOT NULL AUTO_INCREMENT,name varchar(45) DEFAULT NULL,PRIMARY KEY (sideEffectId))";
+  connection.query(query, function(err, result) {
+		if (err) {
+			console.log(err);
+		}
+	});
+
+  query = "ALTER TABLE sideEffects AUTO_INCREMENT = 4000;"
+  connection.query(query, function(err, result) {
+    if (err) {
+      console.log(err);
+    }
+  });
+
+  //symptoms
+
+	query = "CREATE TABLE symptoms (symptomId int NOT NULL AUTO_INCREMENT,name varchar(45) DEFAULT NULL,PRIMARY KEY (symptomId))";
+  connection.query(query, function(err, result) {
+		if (err) {
+			console.log(err);
+		}
+	});
+
+  query = "ALTER TABLE symptoms AUTO_INCREMENT = 5000;"
+  connection.query(query, function(err, result) {
+    if (err) {
+      console.log(err);
+    }
+  });
+
+  //pharmacies
+  query = "CREATE TABLE pharmacies (pharmacyId int NOT NULL AUTO_INCREMENT,name varchar(45) DEFAULT NULL,PRIMARY KEY (pharmacyId))";
+  connection.query(query, function(err, result) {
+		if (err) {
+			console.log(err);
+		}
+		else {res.status(200).send("Pharmacy table created succesfully")}
+	});
+
+  query = "ALTER TABLE pharmacies AUTO_INCREMENT = 7000;"
+  connection.query(query, function(err, result) {
+    if (err) {
+      console.log(err);
+    }
+  });
+
+  //users
+
+  query = "CREATE TABLE `users` (`id` INT NOT NULL AUTO_INCREMENT,`name` VARCHAR(100),  `email` VARCHAR(50), `password` VARCHAR(500), PRIMARY KEY (`id`), UNIQUE INDEX `id_UNIQUE` (`id` ASC), specialist tinyint, dob DATE); ";
+  connection.query(query, (err, result) => {
+    if(err) {
+      console.log("Errpr creaing parent user", err);
+      res.redirect('/'); }
+  })
+  query = "ALTER TABLE users AUTO_INCREMENT = 1000;";
+  connection.query(query, (err, result) => {
+    if(err) {
+      console.log(err);
+      res.status(400);}
+  })
+
+  //Drugs
+
+	query = "CREATE TABLE drugs (drugId int NOT NULL AUTO_INCREMENT,name varchar(45) DEFAULT NULL,description varchar(500) DEFAULT NULL,price INT DEFAULT NULL,sideEffectId int DEFAULT NULL,diseaseId int DEFAULT NULL,symptomId int DEFAULT NULL, pharmacyId int DEFAULT NULL, PRIMARY KEY (drugId),KEY fk_drugs_1_idx (sideEffectId),KEY fk_drugs_2_idx (diseaseId),KEY fk_drugs_3_idx (symptomId), KEY fk_drugs_4_idx (pharmacyId), CONSTRAINT fk_drugs_1 FOREIGN KEY (sideEffectId) REFERENCES sideEffects (sideEffectId),CONSTRAINT fk_drugs_2 FOREIGN KEY (diseaseId) REFERENCES diseases (diseaseId),CONSTRAINT fk_drugs_3 FOREIGN KEY (symptomId) REFERENCES symptoms (symptomId), CONSTRAINT fk_drugs_4 FOREIGN KEY (pharmacyId) REFERENCES pharmacies (pharmacyId))";
+
+	connection.query(query, function(err, result) {
+		if (err) {
+			console.log(err);
+		}
+  });
+
+  //Prescriptions
+
+  connection.query("create table prescriptions(`prescriptionId` INT NOT NULL AUTO_INCREMENT, userId int default NULL, drugId int default null, oldPrescription tinyint, primary key (prescriptionId), key fk_prescriptions_1_idx (drugId), key fk_prescriptions_2_idx (userId), constraint fk_prescription_1 foreign key (drugId) references db.drugs (drugId), constraint fk_prescription_2 foreign key (userId) references db.users (id))",
+    function(err, result, fields) {
+      if (err) {
+        console.log(err);
+        throw err;
+      }
+    });
+
+    query = "ALTER TABLE prescriptions AUTO_INCREMENT = 2000;"
+    connection.query(query, function(err, result) {
+      if (err) {
+        console.log(err);
+      }
+    });
+
+});
+
 //GET /
 app.get('/', (req, res) => {
   res.status(200).send('Go to 0.0.0.0:3000.');
@@ -449,7 +633,7 @@ app.get("/searchPrescription", function (req, res) {
       i = i+2;
       res.status(200).json({
         "data" : i,
-        "prescription" : rows[0] 
+        "prescription" : rows[0]
       })
     }
     else
