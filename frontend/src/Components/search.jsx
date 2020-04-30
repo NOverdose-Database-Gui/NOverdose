@@ -35,6 +35,7 @@ export class Search extends React.Component{
 
     search(name, disease, symptom, min, max, sideEffect, pharmacy)
     {
+        console.log(symptom);
             name = '"' + name + '"';
             this.noverdoseRepo.search(name, disease, symptom, min, max, sideEffect,pharmacy).then(returnDrugs => {
                 console.log(returnDrugs);
@@ -155,7 +156,7 @@ export class Search extends React.Component{
                                 </div>
                             </div>
                 <div className="mt-2">
-                    <button type="button" className="btn btn-primary" onClick={() => this.search(this.state.name, this.state.disease, this.state.symptom, this.state.minPrice, this.state.maxPrice, this.state.sideEffect)}>
+                    <button type="button" className="btn btn-primary" onClick={() => this.search(this.state.name, this.state.disease, this.state.symptom, this.state.minPrice, this.state.maxPrice, this.state.sideEffect, this.state.pharmacy)}>
                         Search
                     </button>
                 </div>

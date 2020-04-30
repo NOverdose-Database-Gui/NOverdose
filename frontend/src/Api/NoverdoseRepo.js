@@ -381,7 +381,7 @@ export class NoverdoseRepo {
                         {
                             if(max == 'N/A' || max == 'n/a' || max == undefined)
                             {
-                                where = "WHERE s.symptomId =" + symptom + " AND disdiseaseId = " + disease;
+                                where = "WHERE s.symptomId =" + symptom + " AND dis.diseaseId = " + disease;
                                 return new Promise((resolve, reject) => {
                                 axios.get(`${this.url}/getDrugs`, {params: {where: where}})
                                 .then(resp => resolve(resp.data))
@@ -390,7 +390,7 @@ export class NoverdoseRepo {
                             }
                             else
                             {
-                                where = "WHERE d.price <= " + max + " AND s.symptomId =" + symptom + " AND disdiseaseId = " + disease;
+                                where = "WHERE d.price <= " + max + " AND s.symptomId =" + symptom + " AND dis.diseaseId = " + disease;
                                 return new Promise((resolve, reject) => {
                                 axios.get(`${this.url}/getDrugs`, {params: {where: where}})
                                 .then(resp => resolve(resp.data))
@@ -945,19 +945,26 @@ export class NoverdoseRepo {
         }
         else
         {
+            console.log('here');
             if(sideEffect == 4000 || sideEffect == undefined)
         {
+            console.log('here');
             if(name == '"N/A"' || name == '"n/a"' || name == undefined)
             {
+                console.log('here');
                 if(disease == 6000 || disease == undefined)
                 {
+                    console.log('here');
                     if(symptom == 5000 || symptom == undefined)
                     {
+                        console.log('here');
                         if(min == 'N/A' || min == 'n/a' || min == undefined)
                         {
+                            console.log('here');
                             if(max == 'N/A' || max == 'n/a' || max == undefined)
                             {
-                                where = "";
+                                console.log('here');
+                                where = "WHERE p.pharmacyId = " + pharmacy;
                                 return new Promise((resolve, reject) => {
                                     axios.get(`${this.url}/getDrugs`, {params: {where: where}})
                                     .then(resp => resolve(resp.data))
@@ -966,7 +973,7 @@ export class NoverdoseRepo {
                             }
                             else
                             {
-                                where = "WHERE d.price <= " + max;
+                                where = "WHERE d.price <= " + max + " AND p.pharmacyId = " + pharmacy;
                                 return new Promise((resolve, reject) => {
                                     axios.get(`${this.url}/getDrugs`, {params: {where: where}})
                                     .then(resp => resolve(resp.data))
@@ -976,7 +983,7 @@ export class NoverdoseRepo {
                         }
                         else if(max == 'N/A' || max == 'n/a' || max == undefined)
                         {
-                            where = "WHERE d.price >= " + min;
+                            where = "WHERE d.price >= " + min + " AND p.pharmacyId = " + pharmacy;
                             return new Promise((resolve, reject) => {
                                 axios.get(`${this.url}/getDrugs`, {params: {where: where}})
                                 .then(resp => resolve(resp.data))
@@ -985,7 +992,7 @@ export class NoverdoseRepo {
                         }
                         else{
                             return new Promise((resolve, reject) => {
-                                where = "WHERE d.price Between " + min + " AND " + max;
+                                where = "WHERE d.price Between " + min + " AND " + max + " AND p.pharmacyId = " + pharmacy;
                                 axios.get(`${this.url}/getDrugs`, {params: {where: where}})
                                 .then(resp => resolve(resp.data))
                                 .catch(resp => alert(resp));
@@ -998,7 +1005,7 @@ export class NoverdoseRepo {
                         {
                             if(max == 'N/A' || max == 'n/a' || max == undefined)
                             {
-                                where = "WHERE s.symptomId =" + symptom; 
+                                where = "WHERE s.symptomId =" + symptom + " AND p.pharmacyId = " + pharmacy; 
                             return new Promise((resolve, reject) => {
                                 axios.get(`${this.url}/getDrugs`, {params: {where: where}})
                                 .then(resp => resolve(resp.data))
@@ -1007,7 +1014,7 @@ export class NoverdoseRepo {
                             }
                             else
                             {
-                                where = "WHERE d.price <= " + max + " AND s.symptomId =" + symptom; 
+                                where = "WHERE d.price <= " + max + " AND s.symptomId =" + symptom + " AND p.pharmacyId = " + pharmacy; 
                             return new Promise((resolve, reject) => {
                                 axios.get(`${this.url}/getDrugs`, {params: {where: where}})
                                 .then(resp => resolve(resp.data))
@@ -1017,7 +1024,7 @@ export class NoverdoseRepo {
                         }
                         else if(max == 'N/A' || max == 'n/a' || max == undefined)
                         {
-                            where = "WHERE d.price >= " + max + " AND s.symptomId =" + symptom;
+                            where = "WHERE d.price >= " + max + " AND s.symptomId =" + symptom + " AND p.pharmacyId = " + pharmacy;
                             return new Promise((resolve, reject) => {
                                 axios.get(`${this.url}/getDrugs`, {params: {where: where}})
                                 .then(resp => resolve(resp.data))
@@ -1025,7 +1032,7 @@ export class NoverdoseRepo {
                             });
                         }
                         else{
-                            where = "WHERE d.price BETWEEN " + max + " AND " + min + " AND s.symptomId =" + symptom;
+                            where = "WHERE d.price BETWEEN " + max + " AND " + min + " AND s.symptomId =" + symptom + " AND p.pharmacyId = " + pharmacy;
                             return new Promise((resolve, reject) => {
                                 axios.get(`${this.url}/getDrugs`, {params: {where: where}})
                                 .then(resp => resolve(resp.data))
@@ -1042,7 +1049,7 @@ export class NoverdoseRepo {
                         {
                             if(max == 'N/A' || max == 'n/a' || max == undefined)
                             {
-                                where = "WHERE dis.diseaseId = " + disease;
+                                where = "WHERE dis.diseaseId = " + disease + " AND p.pharmacyId = " + pharmacy;
                             return new Promise((resolve, reject) => {
                                 axios.get(`${this.url}/getDrugs`, {params: {where: where}})
                                 .then(resp => resolve(resp.data))
@@ -1051,7 +1058,7 @@ export class NoverdoseRepo {
                             }
                             else
                             {
-                                where = "WHERE d.price <= " + max + " AND dis.diseaseId = " + disease;
+                                where = "WHERE d.price <= " + max + " AND dis.diseaseId = " + disease + " AND p.pharmacyId = " + pharmacy;
                             return new Promise((resolve, reject) => {
                                 axios.get(`${this.url}/getDrugs`, {params: {where: where}})
                                 .then(resp => resolve(resp.data))
@@ -1061,7 +1068,7 @@ export class NoverdoseRepo {
                         }
                         else if(max == 'N/A' || max == 'n/a' || max == undefined)
                         {
-                            where = "WHERE d.price >= " + min + " AND dis.diseaseId = " + disease;
+                            where = "WHERE d.price >= " + min + " AND dis.diseaseId = " + disease + " AND p.pharmacyId = " + pharmacy;
                             return new Promise((resolve, reject) => {
                                 axios.get(`${this.url}/getDrugs`, {params: {where: where}})
                                 .then(resp => resolve(resp.data))
@@ -1070,7 +1077,7 @@ export class NoverdoseRepo {
                         }
                         else{
                             return new Promise((resolve, reject) => {
-                                where = "WHERE d.price Between " + min + " AND " + max + " AND dis.diseaseId = " + disease;
+                                where = "WHERE d.price Between " + min + " AND " + max + " AND dis.diseaseId = " + disease + " AND p.pharmacyId = " + pharmacy;
                                 axios.get(`${this.url}/getDrugs`, {params: {where: where}})
                                 .then(resp => resolve(resp.data))
                                 .catch(resp => alert(resp));
@@ -1083,7 +1090,7 @@ export class NoverdoseRepo {
                         {
                             if(max == 'N/A' || max == 'n/a' || max == undefined)
                             {
-                                where = "WHERE s.symptomId =" + symptom + " AND disdiseaseId = " + disease;
+                                where = "WHERE s.symptomId =" + symptom + " AND dis.diseaseId = " + disease + " AND p.pharmacyId = " + pharmacy;
                                 return new Promise((resolve, reject) => {
                                 axios.get(`${this.url}/getDrugs`, {params: {where: where}})
                                 .then(resp => resolve(resp.data))
@@ -1092,7 +1099,7 @@ export class NoverdoseRepo {
                             }
                             else
                             {
-                                where = "WHERE d.price <= " + max + " AND s.symptomId =" + symptom + " AND disdiseaseId = " + disease;
+                                where = "WHERE d.price <= " + max + " AND s.symptomId =" + symptom + " AND dis.diseaseId = " + disease + " AND p.pharmacyId = " + pharmacy;
                                 return new Promise((resolve, reject) => {
                                 axios.get(`${this.url}/getDrugs`, {params: {where: where}})
                                 .then(resp => resolve(resp.data))
@@ -1102,7 +1109,7 @@ export class NoverdoseRepo {
                         }
                         else if(max == 'N/A' || max == 'n/a' || max == undefined)
                         {
-                            where = "WHERE d.price >= " + max + " AND s.symptomId =" + symptom + " AND dis.diseaseId = " + disease;
+                            where = "WHERE d.price >= " + max + " AND s.symptomId =" + symptom + " AND dis.diseaseId = " + disease + " AND p.pharmacyId = " + pharmacy;
                             return new Promise((resolve, reject) => {
                                 axios.get(`${this.url}/getDrugs`, {params: {where: where}})
                                 .then(resp => resolve(resp.data))
@@ -1110,7 +1117,7 @@ export class NoverdoseRepo {
                             });
                         }
                         else{
-                            where = "WHERE d.price BETWEEN " + max + " AND " + min + " AND s.symptomId =" + symptom + " AND dis.diseaseId = " + disease;
+                            where = "WHERE d.price BETWEEN " + max + " AND " + min + " AND s.symptomId =" + symptom + " AND dis.diseaseId = " + disease + " AND p.pharmacyId = " + pharmacy;
                             return new Promise((resolve, reject) => {
                                 axios.get(`${this.url}/getDrugs`, {params: {where: where}})
                                 .then(resp => resolve(resp.data))
@@ -1131,7 +1138,7 @@ export class NoverdoseRepo {
                             if(max == 'N/A' || max == 'n/a' || max == undefined)
                             {
                                 console.log('here');
-                                where = "WHERE d.name = " + name;
+                                where = "WHERE d.name = " + name + " AND p.pharmacyId = " + pharmacy;
                             return new Promise((resolve, reject) => {
                                 axios.get(`${this.url}/getDrugs`, {params: {where: where}})
                                 .then(resp => resolve(resp.data))
@@ -1140,7 +1147,7 @@ export class NoverdoseRepo {
                             }
                             else
                             {
-                                where = "WHERE d.price <= " + max + " AND d.name = " + name;
+                                where = "WHERE d.price <= " + max + " AND d.name = " + name + " AND p.pharmacyId = " + pharmacy;
                                 return new Promise((resolve, reject) => {
                                     axios.get(`${this.url}/getDrugs`, {params: {where: where}})
                                     .then(resp => resolve(resp.data))
@@ -1150,7 +1157,7 @@ export class NoverdoseRepo {
                         }
                         else if(max == 'N/A' || max == 'n/a' || max == undefined)
                         {
-                            where = "WHERE d.price >= " + min+ " AND d.name = " + name;
+                            where = "WHERE d.price >= " + min+ " AND d.name = " + name + " AND p.pharmacyId = " + pharmacy;
                             return new Promise((resolve, reject) => {
                                 axios.get(`${this.url}/getDrugs`, {params: {where: where}})
                                 .then(resp => resolve(resp.data))
@@ -1159,7 +1166,7 @@ export class NoverdoseRepo {
                         }
                         else{
                             return new Promise((resolve, reject) => {
-                                where = "WHERE d.price Between " + min + " AND " + max + " AND d.name = " + name;
+                                where = "WHERE d.price Between " + min + " AND " + max + " AND d.name = " + name + " AND p.pharmacyId = " + pharmacy;
                                 axios.get(`${this.url}/getDrugs`, {params: {where: where}})
                                 .then(resp => resolve(resp.data))
                                 .catch(resp => alert(resp));
@@ -1172,7 +1179,7 @@ export class NoverdoseRepo {
                         {
                             if(max == 'N/A' || max == 'n/a' || max == undefined)
                             {
-                                where = "WHERE s.symptomId =" + symptom + " AND d.name = " + name;
+                                where = "WHERE s.symptomId =" + symptom + " AND d.name = " + name + " AND p.pharmacyId = " + pharmacy;
                             return new Promise((resolve, reject) => {
                                 axios.get(`${this.url}/getDrugs`, {params: {where: where}})
                                 .then(resp => resolve(resp.data))
@@ -1181,7 +1188,7 @@ export class NoverdoseRepo {
                             }
                             else
                             {
-                                where = "WHERE d.price <= " + max + " AND s.symptomId =" + symptom + " AND d.name = " + name;
+                                where = "WHERE d.price <= " + max + " AND s.symptomId =" + symptom + " AND d.name = " + name + " AND p.pharmacyId = " + pharmacy;
                             return new Promise((resolve, reject) => {
                                 axios.get(`${this.url}/getDrugs`, {params: {where: where}})
                                 .then(resp => resolve(resp.data))
@@ -1191,7 +1198,7 @@ export class NoverdoseRepo {
                         }
                         else if(max == 'N/A' || max == 'n/a' || max == undefined)
                         {
-                            where = "WHERE d.price >= " + max + " AND s.symptomId =" + symptom + " AND d.name = " + name;
+                            where = "WHERE d.price >= " + max + " AND s.symptomId =" + symptom + " AND d.name = " + name + " AND p.pharmacyId = " + pharmacy;
                             return new Promise((resolve, reject) => {
                                 axios.get(`${this.url}/getDrugs`, {params: {where: where}})
                                 .then(resp => resolve(resp.data))
@@ -1199,7 +1206,7 @@ export class NoverdoseRepo {
                             });
                         }
                         else{
-                            where = "WHERE d.price BETWEEN " + max + " AND " + min + " AND s.symptomId =" + symptom + " AND d.name = " + name;
+                            where = "WHERE d.price BETWEEN " + max + " AND " + min + " AND s.symptomId =" + symptom + " AND d.name = " + name + " AND p.pharmacyId = " + pharmacy;
                             return new Promise((resolve, reject) => {
                                 axios.get(`${this.url}/getDrugs`, {params: {where: where}})
                                 .then(resp => resolve(resp.data))
@@ -1216,7 +1223,7 @@ export class NoverdoseRepo {
                         {
                             if(max == 'N/A' || max == 'n/a' || max == undefined)
                             {
-                                where = "WHERE dis.diseaseId = " + disease + " AND d.name = " + name;
+                                where = "WHERE dis.diseaseId = " + disease + " AND d.name = " + name + " AND p.pharmacyId = " + pharmacy;
                             return new Promise((resolve, reject) => {
                                 axios.get(`${this.url}/getDrugs`, {params: {where: where}})
                                 .then(resp => resolve(resp.data))
@@ -1225,7 +1232,7 @@ export class NoverdoseRepo {
                             }
                             else
                             {
-                                where = "WHERE d.price <= " + max + " AND dis.diseaseId = " + disease + " AND d.name = " + name;
+                                where = "WHERE d.price <= " + max + " AND dis.diseaseId = " + disease + " AND d.name = " + name + " AND p.pharmacyId = " + pharmacy;
                             return new Promise((resolve, reject) => {
                                 axios.get(`${this.url}/getDrugs`, {params: {where: where}})
                                 .then(resp => resolve(resp.data))
@@ -1235,7 +1242,7 @@ export class NoverdoseRepo {
                         }
                         else if(max == 'N/A' || max == 'n/a' || max == undefined)
                         {
-                            where = "WHERE d.price >= " + min + " AND dis.diseaseId = " + disease + " AND d.name = " + name;
+                            where = "WHERE d.price >= " + min + " AND dis.diseaseId = " + disease + " AND d.name = " + name + " AND p.pharmacyId = " + pharmacy;
                             return new Promise((resolve, reject) => {
                                 axios.get(`${this.url}/getDrugs`, {params: {where: where}})
                                 .then(resp => resolve(resp.data))
@@ -1244,7 +1251,7 @@ export class NoverdoseRepo {
                         }
                         else{
                             return new Promise((resolve, reject) => {
-                                where = "WHERE d.price Between " + min + " AND " + max + " AND dis.diseaseId = " + disease + " AND d.name = " + name;
+                                where = "WHERE d.price Between " + min + " AND " + max + " AND dis.diseaseId = " + disease + " AND d.name = " + name + " AND p.pharmacyId = " + pharmacy;
                                 axios.get(`${this.url}/getDrugs`, {params: {where: where}})
                                 .then(resp => resolve(resp.data))
                                 .catch(resp => alert(resp));
@@ -1257,7 +1264,7 @@ export class NoverdoseRepo {
                         {
                             if(max == 'N/A' || max == 'n/a' || max == undefined)
                             {
-                                where = "WHERE s.symptomId =" + symptom + " AND dis.diseaseId = " + disease + " AND d.name = " + name;
+                                where = "WHERE s.symptomId =" + symptom + " AND dis.diseaseId = " + disease + " AND d.name = " + name + " AND p.pharmacyId = " + pharmacy;
                                 return new Promise((resolve, reject) => {
                                 axios.get(`${this.url}/getDrugs`, {params: {where: where}})
                                 .then(resp => resolve(resp.data))
@@ -1266,7 +1273,7 @@ export class NoverdoseRepo {
                             }
                             else
                             {
-                                where = "WHERE d.price <= " + max + " AND s.symptomId =" + symptom + " AND dis.diseaseId = " + disease + " AND d.name = " + name;
+                                where = "WHERE d.price <= " + max + " AND s.symptomId =" + symptom + " AND dis.diseaseId = " + disease + " AND d.name = " + name + " AND p.pharmacyId = " + pharmacy;
                                 return new Promise((resolve, reject) => {
                                     axios.get(`${this.url}/getDrugs`, {params: {where: where}})
                                     .then(resp => resolve(resp.data))
@@ -1276,7 +1283,7 @@ export class NoverdoseRepo {
                         }
                         else if(max == 'N/A' || max == 'n/a' || max == undefined)
                         {
-                            where = "WHERE d.price >= " + max + " AND s.symptomId =" + symptom + " AND dis.diseaseId = " + disease + " AND d.name = " + name;
+                            where = "WHERE d.price >= " + max + " AND s.symptomId =" + symptom + " AND dis.diseaseId = " + disease + " AND d.name = " + name + " AND p.pharmacyId = " + pharmacy;
                             return new Promise((resolve, reject) => {
                                 axios.get(`${this.url}/getDrugs`, {params: {where: where}})
                                 .then(resp => resolve(resp.data))
@@ -1284,7 +1291,7 @@ export class NoverdoseRepo {
                             });
                         }
                         else{
-                            where = "WHERE d.price BETWEEN " + max + " AND " + min + " AND s.symptomId =" + symptom + " AND dis.diseaseId = " + disease + " AND d.name = " + name;
+                            where = "WHERE d.price BETWEEN " + max + " AND " + min + " AND s.symptomId =" + symptom + " AND dis.diseaseId = " + disease + " AND d.name = " + name + " AND p.pharmacyId = " + pharmacy;
                             return new Promise((resolve, reject) => {
                                 axios.get(`${this.url}/getDrugs`, {params: {mwhere: where}})
                                 .then(resp => resolve(resp.data))
@@ -1307,7 +1314,7 @@ export class NoverdoseRepo {
                         {
                             if(max == 'N/A' || max == 'n/a' || max == undefined)
                             {
-                                where = "WHERE se.sideEffectId = " + sideEffect; 
+                                where = "WHERE se.sideEffectId = " + sideEffect + " AND p.pharmacyId = " + pharmacy; 
                             return new Promise((resolve, reject) => {
                                 axios.get(`${this.url}/getDrugs`, {params: {where: where}})
                                 .then(resp => resolve(resp.data))
@@ -1316,7 +1323,7 @@ export class NoverdoseRepo {
                             }
                             else
                             {
-                                where = "WHERE d.price <= " + max + " AND se.sideEffectId = " + sideEffect; 
+                                where = "WHERE d.price <= " + max + " AND se.sideEffectId = " + sideEffect + " AND p.pharmacyId = " + pharmacy; 
                             return new Promise((resolve, reject) => {
                                 axios.get(`${this.url}/getDrugs`, {params: {where: where}})
                                 .then(resp => resolve(resp.data))
@@ -1326,7 +1333,7 @@ export class NoverdoseRepo {
                         }
                         else if(max == 'N/A' || max == 'n/a' || max == undefined)
                         {
-                            where = "WHERE d.price >= " + min+ " AND se.sideEffectId = " + sideEffect;
+                            where = "WHERE d.price >= " + min+ " AND se.sideEffectId = " + sideEffect + " AND p.pharmacyId = " + pharmacy;
                             return new Promise((resolve, reject) => {
                                 axios.get(`${this.url}/getDrugs`, {params: {where: where}})
                                 .then(resp => resolve(resp.data))
@@ -1335,7 +1342,7 @@ export class NoverdoseRepo {
                         }
                         else{
                             return new Promise((resolve, reject) => {
-                                where = "WHERE d.price Between " + min + " AND " + max + " AND se.sideEffectId = " + sideEffect;
+                                where = "WHERE d.price Between " + min + " AND " + max + " AND se.sideEffectId = " + sideEffect + " AND p.pharmacyId = " + pharmacy;
                                 axios.get(`${this.url}/getDrugs`, {params: {where: where}})
                                 .then(resp => resolve(resp.data))
                                 .catch(resp => alert(resp));
@@ -1348,7 +1355,7 @@ export class NoverdoseRepo {
                         {
                             if(max == 'N/A' || max == 'n/a' || max == undefined)
                             {
-                                where = "WHERE s.symptomId =" + symptom + " AND se.sideEffectId = " + sideEffect; 
+                                where = "WHERE s.symptomId =" + symptom + " AND se.sideEffectId = " + sideEffect+ " AND p.pharmacyId = " + pharmacy; 
                             return new Promise((resolve, reject) => {
                                 axios.get(`${this.url}/getDrugs`, {params: {where: where}})
                                 .then(resp => resolve(resp.data))
@@ -1357,7 +1364,7 @@ export class NoverdoseRepo {
                             }
                             else
                             {
-                                where = "WHERE d.price <= " + max + " AND s.symptomId =" + symptom + " AND se.sideEffectId = " + sideEffect; 
+                                where = "WHERE d.price <= " + max + " AND s.symptomId =" + symptom + " AND se.sideEffectId = " + sideEffect + " AND p.pharmacyId = " + pharmacy; 
                                 return new Promise((resolve, reject) => {
                                     axios.get(`${this.url}/getDrugs`, {params: {where: where}})
                                     .then(resp => resolve(resp.data))
@@ -1367,7 +1374,7 @@ export class NoverdoseRepo {
                         }
                         else if(max == 'N/A' || max == 'n/a' || max == undefined)
                         {
-                            where = "WHERE d.price >= " + max + " AND s.symptomId =" + symptom + " AND se.sideEffectId = " + sideEffect;
+                            where = "WHERE d.price >= " + max + " AND s.symptomId =" + symptom + " AND se.sideEffectId = " + sideEffect + " AND p.pharmacyId = " + pharmacy;
                             return new Promise((resolve, reject) => {
                                 axios.get(`${this.url}/getDrugs`, {params: {where: where}})
                                 .then(resp => resolve(resp.data))
@@ -1375,7 +1382,7 @@ export class NoverdoseRepo {
                             });
                         }
                         else{
-                            where = "WHERE d.price BETWEEN " + max + " AND " + min + " AND s.symptomId =" + symptom + " AND se.sideEffectId = " + sideEffect;
+                            where = "WHERE d.price BETWEEN " + max + " AND " + min + " AND s.symptomId =" + symptom + " AND se.sideEffectId = " + sideEffect + " AND p.pharmacyId = " + pharmacy;
                             return new Promise((resolve, reject) => {
                                 axios.get(`${this.url}/getDrugs`, {params: {where: where}})
                                 .then(resp => resolve(resp.data))
@@ -1392,7 +1399,7 @@ export class NoverdoseRepo {
                         {
                             if(max == 'N/A' || max == 'n/a' || max == undefined)
                             {
-                                where = "WHERE dis.diseaseId = " + disease + " AND se.sideEffectId = " + sideEffect;
+                                where = "WHERE dis.diseaseId = " + disease + " AND se.sideEffectId = " + sideEffect + " AND p.pharmacyId = " + pharmacy;
                             return new Promise((resolve, reject) => {
                                 axios.get(`${this.url}/getDrugs`, {params: {where: where}})
                                 .then(resp => resolve(resp.data))
@@ -1401,7 +1408,7 @@ export class NoverdoseRepo {
                             }
                             else
                             {
-                                where = "WHERE d.price <= " + max + " AND dis.diseaseId = " + disease + " AND se.sideEffectId = " + sideEffect;
+                                where = "WHERE d.price <= " + max + " AND dis.diseaseId = " + disease + " AND se.sideEffectId = " + sideEffect + " AND p.pharmacyId = " + pharmacy;
                             return new Promise((resolve, reject) => {
                                 axios.get(`${this.url}/getDrugs`, {params: {where: where}})
                                 .then(resp => resolve(resp.data))
@@ -1411,7 +1418,7 @@ export class NoverdoseRepo {
                         }
                         else if(max == 'N/A' || max == 'n/a' || max == undefined)
                         {
-                            where = "WHERE d.price >= " + min + " AND dis.diseaseId = " + disease + " AND se.sideEffectId = " + sideEffect;
+                            where = "WHERE d.price >= " + min + " AND dis.diseaseId = " + disease + " AND se.sideEffectId = " + sideEffect+ " AND p.pharmacyId = " + pharmacy;
                             return new Promise((resolve, reject) => {
                                 axios.get(`${this.url}/getDrugs`, {params: {where: where}})
                                 .then(resp => resolve(resp.data))
@@ -1420,7 +1427,7 @@ export class NoverdoseRepo {
                         }
                         else{
                             return new Promise((resolve, reject) => {
-                                where = "WHERE d.price Between " + min + " AND " + max + " AND dis.diseaseId = " + disease + " AND se.sideEffectId = " + sideEffect;
+                                where = "WHERE d.price Between " + min + " AND " + max + " AND dis.diseaseId = " + disease + " AND se.sideEffectId = " + sideEffect+ " AND p.pharmacyId = " + pharmacy;
                                 axios.get(`${this.url}/getDrugs`, {params: {where: where}})
                                 .then(resp => resolve(resp.data))
                                 .catch(resp => alert(resp));
@@ -1433,7 +1440,7 @@ export class NoverdoseRepo {
                         {
                             if(max == 'N/A' || max == 'n/a' || max == undefined)
                             {
-                                where = "WHERE s.symptomId =" + symptom + " AND dis.diseaseId = " + disease + " AND se.sideEffectId = " + sideEffect;
+                                where = "WHERE s.symptomId =" + symptom + " AND dis.diseaseId = " + disease + " AND se.sideEffectId = " + sideEffect+ " AND p.pharmacyId = " + pharmacy;
                             return new Promise((resolve, reject) => {
                                 axios.get(`${this.url}/getDrugs`, {params: {where: where}})
                                 .then(resp => resolve(resp.data))
@@ -1442,7 +1449,7 @@ export class NoverdoseRepo {
                             }
                             else
                             {
-                                where = "WHERE d.price <= " + max + " AND s.symptomId =" + symptom + " AND dis.diseaseId = " + disease + " AND se.sideEffectId = " + sideEffect;
+                                where = "WHERE d.price <= " + max + " AND s.symptomId =" + symptom + " AND dis.diseaseId = " + disease + " AND se.sideEffectId = " + sideEffect + " AND p.pharmacyId = " + pharmacy;
                             return new Promise((resolve, reject) => {
                                 axios.get(`${this.url}/getDrugs`, {params: {where: where}})
                                 .then(resp => resolve(resp.data))
@@ -1452,7 +1459,7 @@ export class NoverdoseRepo {
                         }
                         else if(max == 'N/A' || max == 'n/a' || max == undefined)
                         {
-                            where = "WHERE d.price >= " + max + " AND s.symptomId =" + symptom + " AND dis.diseaseId = " + disease + " AND se.sideEffectId = " + sideEffect;
+                            where = "WHERE d.price >= " + max + " AND s.symptomId =" + symptom + " AND dis.diseaseId = " + disease + " AND se.sideEffectId = " + sideEffect+ " AND p.pharmacyId = " + pharmacy;
                             return new Promise((resolve, reject) => {
                                 axios.get(`${this.url}/getDrugs`, {params: {where: where}})
                                 .then(resp => resolve(resp.data))
@@ -1460,7 +1467,7 @@ export class NoverdoseRepo {
                             });
                         }
                         else{
-                            where = "WHERE d.price BETWEEN " + max + " AND " + min + " AND s.symptomId =" + symptom + " AND dis.diseaseId = " + disease+ " AND se.sideEffectId = " + sideEffect;
+                            where = "WHERE d.price BETWEEN " + max + " AND " + min + " AND s.symptomId =" + symptom + " AND dis.diseaseId = " + disease+ " AND se.sideEffectId = " + sideEffect+ " AND p.pharmacyId = " + pharmacy;
                             return new Promise((resolve, reject) => {
                                 axios.get(`${this.url}/getDrugs`, {params: {where: where}})
                                 .then(resp => resolve(resp.data))
@@ -1480,7 +1487,7 @@ export class NoverdoseRepo {
                         {
                             if(max == 'N/A' || max == 'n/a' || max == undefined)
                             {
-                                where = "WHERE d.name = " + name + " AND se.sideEffectId = " + sideEffect;
+                                where = "WHERE d.name = " + name + " AND se.sideEffectId = " + sideEffect + " AND p.pharmacyId = " + pharmacy;
                             return new Promise((resolve, reject) => {
                                 axios.get(`${this.url}/getDrugs`, {params: {where: where}})
                                 .then(resp => resolve(resp.data))
@@ -1489,7 +1496,7 @@ export class NoverdoseRepo {
                             }
                             else
                             {
-                                where = "WHERE d.price <= " + max + " AND d.name = " + name + " AND se.sideEffectId = " + sideEffect;
+                                where = "WHERE d.price <= " + max + " AND d.name = " + name + " AND se.sideEffectId = " + sideEffect + " AND p.pharmacyId = " + pharmacy;
                             return new Promise((resolve, reject) => {
                                 axios.get(`${this.url}/getDrugs`, {params: {where: where}})
                                 .then(resp => resolve(resp.data))
@@ -1499,7 +1506,7 @@ export class NoverdoseRepo {
                         }
                         else if(max == 'N/A' || max == 'n/a' || max == undefined)
                         {
-                            where = "WHERE d.price >= " + min+ " AND d.name = " + name + " AND se.sideEffectId = " + sideEffect;
+                            where = "WHERE d.price >= " + min+ " AND d.name = " + name + " AND se.sideEffectId = " + sideEffect + " AND p.pharmacyId = " + pharmacy;
                             return new Promise((resolve, reject) => {
                                 axios.get(`${this.url}/getDrugs`, {params: {where: where}})
                                 .then(resp => resolve(resp.data))
@@ -1508,7 +1515,7 @@ export class NoverdoseRepo {
                         }
                         else{
                             return new Promise((resolve, reject) => {
-                                where = "WHERE d.price Between " + min + " AND " + max + " AND d.name = " + name + " AND se.sideEffectId = " + sideEffect;
+                                where = "WHERE d.price Between " + min + " AND " + max + " AND d.name = " + name + " AND se.sideEffectId = " + sideEffect + " AND p.pharmacyId = " + pharmacy;
                                 axios.get(`${this.url}/getDrugs`, {params: {where: where}})
                                 .then(resp => resolve(resp.data))
                                 .catch(resp => alert(resp));
@@ -1521,7 +1528,7 @@ export class NoverdoseRepo {
                         {
                             if(max == 'N/A' || max == 'n/a' || max == undefined)
                             {
-                                where = "WHERE s.symptomId =" + symptom + " AND d.name = " + name + " AND se.sideEffectId = " + sideEffect;
+                                where = "WHERE s.symptomId =" + symptom + " AND d.name = " + name + " AND se.sideEffectId = " + sideEffect + " AND p.pharmacyId = " + pharmacy;
                             return new Promise((resolve, reject) => {
                                 axios.get(`${this.url}/getDrugs`, {params: {where: where}})
                                 .then(resp => resolve(resp.data))
@@ -1530,7 +1537,7 @@ export class NoverdoseRepo {
                             }
                             else
                             {
-                                where = "WHERE d.price <= " + max + " AND s.symptomId =" + symptom + " AND d.name = " + name + " AND se.sideEffectId = " + sideEffect;
+                                where = "WHERE d.price <= " + max + " AND s.symptomId =" + symptom + " AND d.name = " + name + " AND se.sideEffectId = " + sideEffect+ " AND p.pharmacyId = " + pharmacy;
                                 return new Promise((resolve, reject) => {
                                     axios.get(`${this.url}/getDrugs`, {params: {where: where}})
                                     .then(resp => resolve(resp.data))
@@ -1540,7 +1547,7 @@ export class NoverdoseRepo {
                         }
                         else if(max == 'N/A' || max == 'n/a' || max == undefined)
                         {
-                            where = "WHERE d.price >= " + max + " AND s.symptomId =" + symptom + " AND d.name = " + name + " AND se.sideEffectId = " + sideEffect;
+                            where = "WHERE d.price >= " + max + " AND s.symptomId =" + symptom + " AND d.name = " + name + " AND se.sideEffectId = " + sideEffect+ " AND p.pharmacyId = " + pharmacy;
                             return new Promise((resolve, reject) => {
                                 axios.get(`${this.url}/getDrugs`, {params: {where: where}})
                                 .then(resp => resolve(resp.data))
@@ -1548,7 +1555,7 @@ export class NoverdoseRepo {
                             });
                         }
                         else{
-                            where = "WHERE d.price BETWEEN " + max + " AND " + min + " AND s.symptomId =" + symptom + " AND d.name = " + name + " AND se.sideEffectId = " + sideEffect;
+                            where = "WHERE d.price BETWEEN " + max + " AND " + min + " AND s.symptomId =" + symptom + " AND d.name = " + name + " AND se.sideEffectId = " + sideEffect+ " AND p.pharmacyId = " + pharmacy;
                             return new Promise((resolve, reject) => {
                                 axios.get(`${this.url}/getDrugs`, {params: {where: where}})
                                 .then(resp => resolve(resp.data))
@@ -1565,7 +1572,7 @@ export class NoverdoseRepo {
                         {
                             if(max == 'N/A' || max == 'n/a' || max == undefined)
                             {
-                                where = "WHERE dis.diseaseId = " + disease + " AND d.name = " + name + " AND se.sideEffectId = " + sideEffect;
+                                where = "WHERE dis.diseaseId = " + disease + " AND d.name = " + name + " AND se.sideEffectId = " + sideEffect+ " AND p.pharmacyId = " + pharmacy;
                             return new Promise((resolve, reject) => {
                                 axios.get(`${this.url}/getDrugs`, {params: {where: where}})
                                 .then(resp => resolve(resp.data))
@@ -1574,7 +1581,7 @@ export class NoverdoseRepo {
                             }
                             else
                             {
-                                where = "WHERE d.price <= " + max + " AND dis.diseaseId = " + disease + " AND d.name = " + name + " AND se.sideEffectId = " + sideEffect;
+                                where = "WHERE d.price <= " + max + " AND dis.diseaseId = " + disease + " AND d.name = " + name + " AND se.sideEffectId = " + sideEffect+ " AND p.pharmacyId = " + pharmacy;
                             return new Promise((resolve, reject) => {
                                 axios.get(`${this.url}/getDrugs`, {params: {where: where}})
                                 .then(resp => resolve(resp.data))
@@ -1584,7 +1591,7 @@ export class NoverdoseRepo {
                         }
                         else if(max == 'N/A' || max == 'n/a' || max == undefined)
                         {
-                            where = "WHERE d.price >= " + min + " AND dis.diseaseId = " + disease + " AND d.name = " + name + " AND se.sideEffectId = " + sideEffect;
+                            where = "WHERE d.price >= " + min + " AND dis.diseaseId = " + disease + " AND d.name = " + name + " AND se.sideEffectId = " + sideEffect+ " AND p.pharmacyId = " + pharmacy;
                             return new Promise((resolve, reject) => {
                                 axios.get(`${this.url}/getDrugs`, {params: {where: where}})
                                 .then(resp => resolve(resp.data))
@@ -1593,7 +1600,7 @@ export class NoverdoseRepo {
                         }
                         else{
                             return new Promise((resolve, reject) => {
-                                where = "WHERE d.price  " + min + " AND " + max + " AND dis.diseaseId = " + disease + " AND d.name = " + name + " AND se.sideEffectId = " + sideEffect; 
+                                where = "WHERE d.price  " + min + " AND " + max + " AND dis.diseaseId = " + disease + " AND d.name = " + name + " AND se.sideEffectId = " + sideEffect+ " AND p.pharmacyId = " + pharmacy; 
                                 axios.get(`${this.url}/getDrugs`, {params: {where: where}})
                                 .then(resp => resolve(resp.data))
                                 .catch(resp => alert(resp));
@@ -1606,7 +1613,7 @@ export class NoverdoseRepo {
                         {
                             if(max == 'N/A' || max == 'n/a' || max == undefined)
                             {
-                                where = "WHERE s.symptomId =" + symptom + " AND dis.diseaseId = " + disease + " AND d.name = " + name + " AND se.sideEffectId = " + sideEffect;
+                                where = "WHERE s.symptomId =" + symptom + " AND dis.diseaseId = " + disease + " AND d.name = " + name + " AND se.sideEffectId = " + sideEffect+ " AND p.pharmacyId = " + pharmacy;
                             return new Promise((resolve, reject) => {
                                 axios.get(`${this.url}/getDrugs`, {params: {where: where}})
                                 .then(resp => resolve(resp.data))
@@ -1615,7 +1622,7 @@ export class NoverdoseRepo {
                             }
                             else
                             {
-                                where = "WHERE d.price <= " + max + " AND s.symptomId =" + symptom + " AND dis.diseaseId = " + disease + " AND d.name = " + name + " AND se.sideEffectId = " + sideEffect;
+                                where = "WHERE d.price <= " + max + " AND s.symptomId =" + symptom + " AND dis.diseaseId = " + disease + " AND d.name = " + name + " AND se.sideEffectId = " + sideEffect+ " AND p.pharmacyId = " + pharmacy;
                             return new Promise((resolve, reject) => {
                                 axios.get(`${this.url}/getDrugs`, {params: {where: where}})
                                 .then(resp => resolve(resp.data))
@@ -1625,7 +1632,7 @@ export class NoverdoseRepo {
                         }
                         else if(max == 'N/A' || max == 'n/a' || max == undefined)
                         {
-                            where = "WHERE d.price >= " + max + " AND s.symptomId =" + symptom + " AND dis.diseaseId = " + disease + " AND d.name = " + name + " AND se.sideEffectId = " + sideEffect;
+                            where = "WHERE d.price >= " + max + " AND s.symptomId =" + symptom + " AND dis.diseaseId = " + disease + " AND d.name = " + name + " AND se.sideEffectId = " + sideEffect+ " AND p.pharmacyId = " + pharmacy;
                             return new Promise((resolve, reject) => {
                                 axios.get(`${this.url}/getDrugs`, {params: {where: where}})
                                 .then(resp => resolve(resp.data))
@@ -1633,7 +1640,7 @@ export class NoverdoseRepo {
                             });
                         }
                         else{
-                            where = "WHERE d.price BETWEEN " + max + " AND " + min + " AND s.symptomId =" + symptom + " AND dis.diseaseId = " + disease + " AND d.name = " + name + " AND se.sideEffectId = " + sideEffect; 
+                            where = "WHERE d.price BETWEEN " + max + " AND " + min + " AND s.symptomId =" + symptom + " AND dis.diseaseId = " + disease + " AND d.name = " + name + " AND se.sideEffectId = " + sideEffect+ " AND p.pharmacyId = " + pharmacy; 
                             return new Promise((resolve, reject) => {
                                 axios.get(`${this.url}/getDrugs`, {params: {where: where}})
                                 .then(resp => resolve(resp.data))
