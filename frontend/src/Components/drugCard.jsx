@@ -52,7 +52,7 @@ export default function DrugCard(drug) {
       dispatch({ type: "TOGGLE", payload: { card } });
     };
   }
-    return (
+  return (
         <div className="DrugCard" style={{padding: "20px",margin: "20px"}}>
         <Card fluid color="blue" style={{ height: "100%"}}>
                     <Card.Content header={drug.name} textAlign="center" />

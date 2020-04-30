@@ -33,9 +33,7 @@ export default class MainPage extends React.Component {
             "https://photos.headshotcrew.com/styles/large/s3/photos/35943/03/1/43/998cee2cdc3cb3fb06e52243b623f519.jpg?itok=KvM9pSTr",
             "https://images.squarespace-cdn.com/content/v1/5c869a3765a70789cd2f45cb/1561643929478-ZN0ZQMLFESRTGL5CN7TK/ke17ZwdGBToddI8pDm48kHmLeEzARneXWVNN3KN0jJZ7gQa3H78H3Y0txjaiv_0fDoOvxcdMmMKkDsyUqMSsMWxHk725yiiHCCLfrh8O1z5QHyNOqBUUEtDDsRWrJLTmlMqpINHCYwrjchQjceiMlVzRPhPN2AV6lVr4IpL0Z89NSReZj_I3-pvnrfPpd5Aa/Headshot-woman-red.jpg"
         ]
-        let index = Math.floor(Math.random() * 4);
-        console.log("index = " + index)
-        this.setState({ profilePicUrl: links[index] });
+        
         let id = +this.props.match.params.id;
         if (id) {
             this.repo.getUserById(id)
@@ -58,6 +56,7 @@ export default class MainPage extends React.Component {
                             birthday: bday,
                             specialist:job,
                             password: curuser.user[0].password,
+                            profilePicUrl:links[0]
                         })
                         this.updatePrescriptions();
                 }
@@ -75,7 +74,7 @@ export default class MainPage extends React.Component {
                 let pPrescriptions = [];
                 for(let i = 0; i < len; i++)
                 {
-                    console.log(JSON.stringify(x.data[i]));
+                    console.log(x.data[i]);
                     if (x.data[i].oldPrescription == 0) {
                         let curPrescription = new Drug(
                             x.data[i].prescriptionID,
@@ -83,7 +82,7 @@ export default class MainPage extends React.Component {
                             x.data[i].price,
                             x.data[i].DrugDescription,
                             x.data[i].SideEffectDescription,
-                            x.data[i].pharmacy)
+                            x.data[i].PharmacyName)
                         cPrescriptions.push(curPrescription);
                     } else if (x.data[i].oldPrescription == 1) {
                         let curPrescription = new Drug(
@@ -92,13 +91,13 @@ export default class MainPage extends React.Component {
                             x.data[i].price,
                             x.data[i].DrugDescription,
                             x.data[i].SideEffectDescription,
-                            x.data[i].pharmacy)
+                            x.data[i].PharmacyName)
                         pPrescriptions.push(curPrescription);
                     }
                 }
                 this.setState({pastPrescriptions: pPrescriptions});
                 this.setState({ currentPrescriptions: cPrescriptions });
-                console.log(this.state.pastPrescriptions);
+                console.log(this.state.currentPrescriptions);
             }).catch(x=>{
             alert(x);
         })
