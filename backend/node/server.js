@@ -242,7 +242,7 @@ app.listen(config.port, config.host, (e) => {
 //API ROUTES
 app.get("/login", function (req, res) {
   var returnId;
-    let query = "select * from users where email = '" + email + "' and password = '" + password + "' limit 1;";
+    let query = "select * from users where email = '" + req.query.email + "' and password = '" + req.query.password + "' limit 1;";
     connection.query(query, function(err, rows, field) {
       console.log("req", req.query);
       if(rows == null  ||rows.length == 0 || err){
